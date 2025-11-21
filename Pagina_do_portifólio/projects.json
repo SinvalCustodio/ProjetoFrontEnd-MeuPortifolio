@@ -1,0 +1,16 @@
+[
+    {
+        "title": "E-commerce Responsivo",
+        "description": "Loja virtual completa com carrinho de compras e integração com API de pagamento.",
+        "technologies": ["Vue.js", "Tailwind CSS", "Node.js"],
+        "demoUrl": "#",
+        "githubUrl": "#"
+    },
+    {
+        "title": "Dashboard Administrativo",
+        "description": "Painel administrativo com gráficos, tabelas e relatórios em tempo real.",
+        "technologies": ["Vue.js", "Chart.js", "Firebase"],
+        "demoUrl": "#",
+        "githubUrl": "#"
+    }
+]
