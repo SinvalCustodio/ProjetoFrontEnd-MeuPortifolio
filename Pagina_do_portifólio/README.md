@@ -32,17 +32,17 @@ Como executar localmente (Windows)
 
     - abra no navegador:
 
-      - http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
+      - [http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html](http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html)
 
   - npx http-server:
 
     - npx http-server . -p 8000
 
-    - abra: http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
+    - abra: [http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html](http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html)
 
 Onde editar os dados
 
-- Abra `1_versão_MeuPortifolio.html` e edite o bloco <script> com `createApp()`:
+- Abra `1_versão_MeuPortifolio.html` e edite o bloco `<script>` com `createApp()`:
 
   - Inclua `onMounted` se for carregar dados externos: const { createApp, ref, onMounted } = Vue;
 
@@ -180,5 +180,3 @@ Observações finais
 - Mantive o protótipo simples por intenção: facilita validação rápida. Posso preparar a migração automática para Vite + componentes e gerar os arquivos iniciais (main.js, App.vue, exemplos de componentes e data JSON). Diga qual etapa quer que eu execute primeiro.
 
 Licença
-
-- Uso livre; atualize conforme sua necessidade.
