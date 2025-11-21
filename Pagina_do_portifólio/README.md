@@ -1,14 +1,14 @@
 # Meu Portfólio Front-end — 1_versão_MeuPortifolio
 
-Olá — este repositório contém a versão inicial do meu portfólio front-end. Abaixo corrijo e organizo as informações técnicas para facilitar manutenção e futura migração.
+Olá — este repositório contém a versão inicial do meu portfólio front-end. Abaixo estão informações atualizadas e coerentes com o código-fonte presente na pasta Pagina_do_portifólio.
 
 Resumo
 
-- Protótipo estático em um único arquivo: `Pagina_do_portifólio/1_versão_MeuPortifolio.html`.
+- Protótipo estático: `Pagina_do_portifólio/1_versão_MeuPortifolio.html`.
 
-- Usei Vue 3 via CDN (Composition API: createApp, ref, onMounted, v-for, v-model) e Tailwind CSS via CDN.
+- Tecnologias: Vue 3 (CDN), Tailwind CSS (CDN), Font Awesome.
 
-- Dados dinâmicos (nav, skills, projects, contatos, redes) mantidos em arrays reativas e renderizados com `v-for`.
+- Dados dinâmicos (nav, skills, projects, contatos, redes) são mantidos em arrays reativos e renderizados com `v-for`.
 
 Stack
 
@@ -20,23 +20,21 @@ Stack
 
 - IntersectionObserver — animação das barras de skill.
 
-- HTML/CSS/JS (single-file protótipo).
-
 Onde está o código
 
-- Arquivo principal: Pagina_do_portifólio/1_versão_MeuPortifolio.html
+- Arquivo principal: `Pagina_do_portifólio/1_versão_MeuPortifolio.html`
 
 Como executar localmente (Windows)
 
-- Recomendo usar um servidor HTTP simples para evitar bloqueios de CORS:
+- Recomendo usar um servidor HTTP simples para evitar bloqueios de CORS.
 
   - Python 3:
 
-    - abra o terminal na pasta do projeto e execute:
+    - Abra o terminal na pasta do projeto e execute:
 
       - python -m http.server 8000
 
-    - abra no navegador:
+    - Abra no navegador:
 
       - http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
 
@@ -44,33 +42,31 @@ Como executar localmente (Windows)
 
     - npx http-server . -p 8000
 
-    - abra: http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
+    - Abra:
+
+      - http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
 
 Onde editar os dados
 
-- Abra `Pagina_do_portifólio/1_versão_MeuPortifolio.html` e edite o bloco `<script>` com `createApp()`:
+- Abra `Pagina_do_portifólio/1_versão_MeuPortifolio.html` e edite o bloco `<script>` com `createApp()`.
 
-  - Inclua `onMounted` se for carregar dados externos: const { createApp, ref, onMounted } = Vue;
+  - navItems — itens do menu
 
-  - Arrays principais:
+  - skills — { name, percentage }
 
-    - navItems — itens do menu
+  - projects — { title, description, technologies[], demoUrl, githubUrl } (carregado de `./projects.json`)
 
-    - skills — { name, percentage }
+  - contactForm — { name, email, message }
 
-    - projects — { title, description, technologies[], demoUrl, githubUrl }
+  - contactInfos — { icon, text, link? }
 
-    - contactForm — { name, email, message } (estado)
-
-    - contactInfos — { icon, text, link? }
-
-    - socialLinks — { icon, link }
+  - socialLinks — { icon, link }
 
 Externalizar dados (recomendado)
 
-- Crie `Pagina_do_portifólio/projects.json` (ou mova para `Pagina_do_portifólio/data/projects.json` e atualize o fetch) e carregue via fetch em `onMounted`.
+- Coloque `projects.json` em `Pagina_do_portifólio/projects.json`. Se mover para `Pagina_do_portifólio/data/projects.json`, atualize o fetch no HTML para `./data/projects.json`.
 
-- Exemplo projects.json:
+Exemplo projects.json
 
 ```json
 [

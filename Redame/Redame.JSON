@@ -1,0 +1,89 @@
+# Meu Portfólio Front-end
+
+Resumo
+- Página estática do Meu portfólio construída com Vue 3 (via CDN) e Tailwind CSS (via CDN).
+- Estrutura única em HTML com dados reativos do Vue: navegação, sobre, skills, projetos, contato e footer.
+- Renderização dinâmica usando v-for para projetos, skills, contatos e redes sociais, facilitando manutenção e escalabilidade.
+
+Tecnologias
+- Vue 3 (CDN) — reatividade com ref, v-for, v-model.
+- Tailwind CSS (CDN) — utilitários de estilo.
+- Font Awesome — ícones.
+- IntersectionObserver — animação das barras de skill.
+- HTML/CSS/JS (arquivo: `1_versão_MeuPortifolio.html`).
+
+Onde está o código
+- Arquivo principal: Pagina_do_portifólio/1_versão_MeuPortifolio.html
+
+Como executar localmente (Windows)
+- Recomenda-se rodar via servidor local para evitar problemas de CORS:
+  - Python 3: abra o terminal na pasta do projeto e execute:
+    - python -m http.server 8000
+    - Abra: http://localhost:8000/Pagina_do_portifólio/1_versão_MeuPortifolio.html
+  - npm (sem instalação global):
+    - npx http-server . -p 8000
+
+Estrutura de dados e pontos de edição
+- Abra `1_versão_MeuPortifolio.html` e localize o bloco <script> com createApp.
+- Arrays principais (exemplos):
+  - navItems — menu de navegação
+  - skills — { name, percentage }
+  - projects — { title, description, technologies[], demoUrl, githubUrl }
+  - contactForm — { name, email, message } (estado do formulário)
+  - contactInfos — { icon, text, link? } (renderizado com v-for)
+  - socialLinks — { icon, link } (renderizado no footer)
+
+Exemplo: contactInfos / socialLinks (adicione dentro do setup do Vue)
+```javascript
+// exemplo
+const contactInfos = ref([
+  { icon: 'fas fa-envelope', text: 'sinval.dev.ads@gmail.com' },
+  { icon: 'fas fa-phone', text: '+55 (81) 98154-3142' },
+  { icon: 'fab fa-linkedin', text: 'LinkedIn', link: 'https://linkedin.com/in/...' },
+  { icon: 'fab fa-github', text: 'GitHub', link: 'https://github.com/...' }
+]);
+
+const socialLinks = ref([
+  { icon: 'fab fa-linkedin', link: 'https://linkedin.com/in/...' },
+  { icon: 'fab fa-github', link: 'https://github.com/...' }
+]);
+```
+
+Sugestão: externalizar projetos
+- Crie `projects.json` e carregue via fetch em onMounted para facilitar atualizações sem tocar no HTML.
+- Exemplo minimal projects.json:
+```json
+[
+  {
+    "title": "E-commerce Responsivo",
+    "description": "Loja virtual com carrinho e integração de pagamento.",
+    "technologies": ["Vue.js","Tailwind CSS","Node.js"],
+    "demoUrl": "#",
+    "githubUrl": "https://github.com/usuario/repo"
+  }
+]
+```
+
+Boas práticas e melhorias recomendadas (prioritárias)
+- Componentizar: migrar para Vite + estrutura de componentes (/components, /views, /assets).
+- Gerenciamento de estado: usar Pinia quando houver dados compartilhados.
+- Roteamento: Vue Router para múltiplas páginas.
+- Testes: adicionar testes unitários (Vitest/Jest) para componentes importantes.
+- Acessibilidade (a11y): adicionar aria-labels, textos alternativos, foco visível.
+- Segurança: todos os links externos com target="_blank" devem ter rel="noopener noreferrer".
+- Formulário: integrar envio real (backend, Formspree, Netlify Forms ou API própria) e validação no cliente/servidor.
+- Performance/SEO: meta tags dinâmicas, lazy-loading de imagens e otimização de assets.
+- Deploy/CI: configurar deploy contínuo (Vercel, Netlify, GitHub Pages) e pipeline de build.
+
+Checklist rápido antes de publicar
+- [ ] Atualizar URLs reais de projetos e redes.
+- [ ] Validar layout em mobile (Mobile-first).
+- [ ] Revisar textos (ortografia e consistência).
+- [ ] Adicionar favicon e metadados (title, description).
+- [ ] Configurar build com Vite para otimização.
+
+Licença
+- Uso livre para edição e personalização. Atualize conforme necessário.
+
+Contato
+- Para dúvidas sobre o projeto ou auxílio com migração para Vite/Pinia/Router, abra uma issue no repositório ou me peça instruções específicas.

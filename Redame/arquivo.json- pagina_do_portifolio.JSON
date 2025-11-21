@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio Front-end</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vue.js via CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Ícones (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos personalizados além do Tailwind */
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
+        }
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #3B82F6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div id="app" class="min-h-screen">
+        <!-- Navegação -->
+        <nav class="fixed w-full bg-white shadow-md z-10">
+            <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-blue-600">MeuPortfólio</a>
+                <div class="hidden md:flex space-x-10">
+                    <a v-for="item in navItems" :href="item.link" class="nav-link text-gray-700 hover:text-blue-600">{{ item.name }}</a>
+                </div>
+                <button @click="toggleMobileMenu" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- Menu Mobile -->
+            <div v-if="mobileMenuOpen" class="md:hidden bg-white px-6 py-4 shadow-lg">
+                <a v-for="item in navItems" :href="item.link" class="block py-2 text-gray-700 hover:text-blue-600">{{ item.name }}</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="pt-32 pb-20 px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div class="container mx-auto flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Olá, eu sou <span class="text-blue-600">Sinval Custodio</span></h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">Desenvolvedor Front-end</h2>
+                    <p class="text-gray-600 mb-8">Crio experiências web incríveis usando Vue.js, Tailwind CSS, bootstrap e outras tecnologias modernas.</p>
+                    <div class="flex space-x-4">
+                        <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md">Ver Projetos</a>
+                        <a href="#contact" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg">Contato</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-blue-200 rounded-full w-64 h-64 md:w-80 md:h-80 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-code text-blue-600 text-8xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre -->
+        <section id="about" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Sobre Mim</h2>
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <p class="text-gray-600 mb-6">Sou um desenvolvedor front-end apaixonado por criar interfaces modernas, responsivas e atualmente sem experiencia, mas me dedico para aprender a cada dia.</p>
+                        <p class="text-gray-600 mb-6">Minha stack principal inclui HTML, CSS, JavaScript e frameworks como Vue.js. Utilizo Tailwind CSS para agilizar o desenvolvimento de interfaces.</p>
+                        <p class="text-gray-600">Estou sempre aprendendo novas tecnologias e metodologias para me manter atualizado com as tendências do mercado.</p>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Minhas Skills</h3>
+                        <div v-for="skill in skills" class="mb-4">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">{{ skill.name }}</span>
+                                <span class="text-gray-600">{{ skill.percentage }}%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 rounded-full">
+                                <div class="h-full bg-blue-600 rounded-full skill-bar" :style="{width: skill.percentage + '%'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projetos -->
+        <section id="projects" class="py-20 px-6 bg-gray-50">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Meus Projetos</h2>
+                <p class="text-center text-gray-600 mb-12">Confira alguns dos meus trabalhos mais recentes</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="project in projects" class="project-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-48 bg-gray-200 overflow-hidden">
+                            <div class="h-full w-full flex items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-500">
+                                <i class="fas fa-laptop-code text-white text-5xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ project.description }}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span v-for="tech in project.technologies" class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">{{ tech }}</span>
+                            </div>
+                            <div class="flex space-x-3">
+                                <a :href="project.demoUrl" target="_blank" class="text-blue-600 hover:text-blue-800 flex items-center">
+                                    <i class="fas fa-external-link-alt mr-1"></i> Demo
+                                </a>
+                                <a :href="project.githubUrl" target="_blank" class="text-gray-700 hover:text-gray-900 flex items-center">
+                                    <i class="fab fa-github mr-1"></i> Código
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contato -->
+        <section id="contact" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Entre em Contato</h2>
+                <p class="text-center text-gray-600 mb-12">Estou disponível para oportunidades para estágios</p>
+                
+                <div class="flex flex-col md:flex-row gap-12">
+                    <div class="md:w-1/2">
+                        <form @submit.prevent="submitForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Nome</label>
+                                <input type="text" id="name" v-model="contactForm.name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" v-model="contactForm.email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-700 mb-2">Mensagem</label>
+                                <textarea id="message" v-model="contactForm.message" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-50 p-8 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6">Informações de Contato</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-blue-600 text-xl mr-4"></i>
+                                    <span class="text-gray-700">sinval.dev.ads@gmail.com</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-blue-600 text-xl mr-4"></i>
+                                    <span class="text-gray-700">+55 (81) 98154-3142 </span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fab fa-linkedin text-blue-600 text-xl mr-4"></i>
+                                    <a href="#" class="text-gray-700 hover:text-blue-600">https://www.linkedin.com/in/sinval-custodio-b02a6bb4/</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fab fa-github text-blue-600 text-xl mr-4"></i>
+                                    <a href="#" class="text-gray-700 hover:text-blue-600">https://github.com/SinvalCustodio </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12 px-6">
+            <div class="container mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">Sinval Custodio</h3>
+                        <p class="text-gray-400">Desenvolvedor Front-end</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 Sinval Custodio. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const mobileMenuOpen = ref(false);
+                const toggleMobileMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                };
+
+                const navItems = ref([
+                    { name: 'Início', link: '#home' },
+                    { name: 'Sobre', link: '#about' },
+                    { name: 'Projetos', link: '#projects' },
+                    { name: 'Contato', link: '#contact' }
+                ]);
+
+                const skills = ref([
+                    { name: 'HTML/CSS', percentage: 90 },
+                    { name: 'JavaScript', percentage: 85 },
+                    { name: 'Vue.js', percentage: 80 },
+                    { name: 'Tailwind CSS', percentage: 75 },
+                    { name: 'React', percentage: 60 }
+                ]);
+
+                const projects = ref([
+                    {
+                        title: 'E-commerce Responsivo',
+                        description: 'Loja virtual completa com carrinho de compras e integração com API de pagamento.',
+                        technologies: ['Vue.js', 'Tailwind CSS', 'Node.js'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    },
+                    {
+                        title: 'Dashboard Administrativo',
+                        description: 'Painel administrativo com gráficos, tabelas e relatórios em tempo real.',
+                        technologies: ['Vue.js', 'Chart.js', 'Firebase'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    },
+                    {
+                        title: 'App de Previsão do Tempo',
+                        description: 'Aplicativo de previsão do tempo com interface limpa e dados em tempo real.',
+                        technologies: ['JavaScript', 'API REST', 'CSS3'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    },
+                    {
+                        title: 'Rede Social para Developers',
+                        description: 'Plataforma para desenvolvedores compartilharem projetos e conhecimentos.',
+                        technologies: ['Vue.js', 'Express', 'MongoDB'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    },
+                    {
+                        title: 'Jogo de Memória',
+                        description: 'Jogo de memória com temas personalizáveis e sistema de pontuação.',
+                        technologies: ['JavaScript', 'HTML5', 'CSS3'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    },
+                    {
+                        title: 'Sistema de Agendamento',
+                        description: 'Sistema para agendamento de serviços com confirmação por e-mail.',
+                        technologies: ['Vue.js', 'Tailwind CSS', 'PHP'],
+                        demoUrl: '#',
+                        githubUrl: '#'
+                    }
+                ]);
+
+                const contactForm = ref({
+                    name: '',
+                    email: '',
+                    message: ''
+                });
+
+                const submitForm = () => {
+                    // Simulação de envio do formulário
+                    alert('Mensagem enviada com sucesso! Em breve entrarei em contato.');
+                    contactForm.value = {
+                        name: '',
+                        email: '',
+                        message: ''
+                    };
+                };
+
+                return {
+                    mobileMenuOpen,
+                    toggleMobileMenu,
+                    navItems,
+                    skills,
+                    projects,
+                    contactForm,
+                    submitForm
+                };
+            },
+            mounted() {
+                // Anima as barras de habilidades quando a seção é visualizada
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const skillBars = entry.target.querySelectorAll('.skill-bar');
+                            skillBars.forEach(bar => {
+                                // A largura já está definida via Vue, apenas ativamos a transição
+                                bar.classList.add('w-full');
+                            });
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                // Observa a seção de habilidades
+                const skillsSection = document.getElementById('about');
+                if (skillsSection) {
+                    observer.observe(skillsSection);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
