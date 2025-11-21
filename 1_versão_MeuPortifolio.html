@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfólio front-end de Sinval Custodio — projetos, skills e contato." />
+  <title>Meu Portfólio Front-end</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .skill-bar { transition: width 1.5s ease-in-out; }
+    .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .project-card:hover { transform: translateY(-5px); }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #3B82F6;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+  <div id="app" class="min-h-screen">
+    <nav class="fixed w-full bg-white shadow-md z-10" role="navigation" aria-label="Menu principal">
+      <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a href="#" class="text-xl font-bold text-blue-600">MeuPortfólio</a>
+        <div class="hidden md:flex space-x-10" role="menubar">
+          <a v-for="(item, idx) in navItems" :key="item.name + '-' + idx" :href="item.link"
+            class="nav-link text-gray-700 hover:text-blue-600" role="menuitem">{{ item.name }}</a>
+        </div>
+        <button @click="toggleMobileMenu" class="md:hidden text-gray-700" aria-label="Abrir menu">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      <div v-if="mobileMenuOpen" class="md:hidden bg-white px-6 py-4 shadow-lg" role="menu">
+        <a v-for="(item, idx) in navItems" :key="item.name + '-mobile-' + idx" :href="item.link"
+          class="block py-2 text-gray-700 hover:text-blue-600" role="menuitem">{{ item.name }}</a>
+      </div>
+    </nav>
+
+    <section id="home" class="pt-32 pb-20 px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div class="container mx-auto flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Olá, eu sou <span
+              class="text-blue-600">Sinval Custodio</span></h1>
+          <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">Desenvolvedor Front-end</h2>
+          <p class="text-gray-600 mb-8">Crio experiências web usando Vue.js e Tailwind CSS.</p>
+          <div class="flex space-x-4">
+            <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md">Ver
+              Projetos</a>
+            <a href="#contact" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg">Contato</a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="bg-blue-200 rounded-full w-64 h-64 md:w-80 md:h-80 flex items-center justify-center shadow-lg">
+            <i class="fas fa-code text-blue-600 text-8xl"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-20 px-6 bg-white">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Sobre Mim</h2>
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-10 md:mb-0">
+            <p class="text-gray-600 mb-6">Sou desenvolvedor front-end em aprendizado contínuo, focado em criar interfaces
+              responsivas.</p>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <h3 class="text-xl font-semibold text-gray-800 mb-6">Minhas Skills</h3>
+            <div v-for="(skill, sidx) in skills" :key="skill.name + '-' + sidx" class="mb-4">
+              <div class="flex justify-between mb-1">
+                <span class="text-gray-700">{{ skill.name }}</span>
+                <span class="text-gray-600">{{ skill.percentage }}%</span>
+              </div>
+              <div class="h-2 bg-gray-200 rounded-full">
+                <div class="h-full bg-blue-600 rounded-full skill-bar w-0" :data-percentage="skill.percentage"
+                  style="width:0;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="py-20 px-6 bg-gray-50">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Meus Projetos</h2>
+        <p class="text-center text-gray-600 mb-12">Confira alguns dos meus trabalhos mais recentes</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="(project, pidx) in projects" :key="project.title + '-' + pidx"
+            class="project-card bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-48 bg-gray-200 overflow-hidden">
+              <div class="h-full w-full flex items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-500">
+                <i class="fas fa-laptop-code text-white text-5xl"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h3>
+              <p class="text-gray-600 mb-4">{{ project.description }}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span v-for="(tech, tidx) in project.technologies" :key="project.title + '-tech-' + tidx"
+                  class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">{{ tech }}</span>
+              </div>
+              <div class="flex space-x-3">
+                <a :href="project.demoUrl" target="_blank" rel="noopener noreferrer"
+                  class="text-blue-600 hover:text-blue-800 flex items-center" aria-label="Abrir demo do projeto">
+                  <i class="fas fa-external-link-alt mr-1"></i> Demo
+                </a>
+                <a :href="project.githubUrl" target="_blank" rel="noopener noreferrer"
+                  class="text-gray-700 hover:text-gray-900 flex items-center" aria-label="Abrir repositório do projeto no GitHub">
+                  <i class="fab fa-github mr-1"></i> Código
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-20 px-6 bg-white">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Entre em Contato</h2>
+        <p class="text-center text-gray-600 mb-12">Estou disponível para oportunidades e estágios</p>
+
+        <div class="flex flex-col md:flex-row gap-12">
+          <div class="md:w-1/2">
+            <form @submit.prevent="submitForm" class="space-y-6">
+              <div>
+                <label for="name" class="block text-gray-700 mb-2">Nome</label>
+                <input type="text" id="name" v-model="contactForm.name" required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" v-model="contactForm.email" required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label for="message" class="block text-gray-700 mb-2">Mensagem</label>
+                <textarea id="message" v-model="contactForm.message" required rows="5"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              </div>
+              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md">Enviar
+                Mensagem</button>
+            </form>
+          </div>
+          <div class="md:w-1/2">
+            <div class="bg-gray-50 p-8 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6">Informações de Contato</h3>
+              <div class="space-y-4">
+                <div v-for="info in contactInfos" :key="info.text" class="flex items-center">
+                  <i :class="info.icon + ' text-blue-600 text-xl mr-4'"></i>
+                  <template v-if="info.link">
+                    <a :href="info.link" target="_blank" rel="noopener noreferrer"
+                      class="text-gray-700 hover:text-blue-600">{{ info.text }}</a>
+                  </template>
+                  <template v-else>
+                    <span class="text-gray-700">{{ info.text }}</span>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-12 px-6">
+      <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <h3 class="text-2xl font-bold">Sinval Custodio</h3>
+            <p class="text-gray-400">Desenvolvedor Front-end</p>
+          </div>
+          <div class="flex space-x-6">
+            <a v-for="social in socialLinks" :key="social.link" :href="social.link" target="_blank" rel="noopener noreferrer"
+              class="text-gray-400 hover:text-white text-xl">
+              <i :class="social.icon"></i>
+            </a>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2023 Sinval Custodio. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted } = Vue;
+    createApp({
+      setup() {
+        const mobileMenuOpen = ref(false);
+        const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value; };
+        const navItems = ref([
+          { name: 'Início', link: '#home' },
+          { name: 'Sobre', link: '#about' },
+          { name: 'Projetos', link: '#projects' },
+          { name: 'Contato', link: '#contact' }
+        ]);
+        const contactInfos = ref([
+          { icon: 'fas fa-envelope', text: 'sinval.dev.ads@gmail.com' },
+          { icon: 'fas fa-phone', text: '+55 (81) 98154-3142' },
+          { icon: 'fab fa-linkedin', text: 'LinkedIn', link: 'https://www.linkedin.com/in/sinval-custodio-dev' },
+          { icon: 'fab fa-github', text: 'GitHub', link: 'https://github.com/SinvalCustodio' }
+        ]);
+        const socialLinks = ref([
+          { icon: 'fab fa-linkedin', link: 'https://www.linkedin.com/in/sinval-custodio-dev' },
+          { icon: 'fab fa-github', link: 'https://github.com/SinvalCustodio' },
+          { icon: 'fab fa-twitter', link: '#' },
+          { icon: 'fab fa-instagram', link: '#' }
+        ]);
+        const skills = ref([
+          { name: 'HTML/CSS', percentage: 90 },
+          { name: 'JavaScript', percentage: 80 },
+          { name: 'Vue.js', percentage: 75 },
+          { name: 'Tailwind CSS', percentage: 70 },
+          { name: 'React', percentage: 60 }
+        ]);
+        const projects = ref([]);
+        onMounted(async () => {
+          try {
+            const res = await fetch('./projects.json'); // arquivo em Pagina_do_portifólio/
+            if (!res.ok) throw new Error('Falha ao carregar projects.json');
+            projects.value = await res.json();
+          } catch (err) {
+            console.error(err);
+          }
+        });
+        const contactForm = ref({ name: '', email: '', message: '' });
+        const submitForm = () => {
+          alert('Mensagem enviada com sucesso! Em breve entrarei em contato.');
+          contactForm.value = { name: '', email: '', message: '' };
+        };
+        return {
+          mobileMenuOpen, toggleMobileMenu, navItems, skills, projects,
+          contactForm, contactInfos, socialLinks, submitForm
+        };
+      },
+      mounted() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const skillBars = entry.target.querySelectorAll('.skill-bar');
+              skillBars.forEach(bar => {
+                const pct = bar.dataset.percentage || '0';
+                bar.style.width = pct + '%';
+              });
+            }
+          });
+        }, { threshold: 0.4 });
+        const skillsSection = document.getElementById('about');
+        if (skillsSection) observer.observe(skillsSection);
+      }
+    }).mount('#app');
+  </script>
+</body>
+
+</html>
