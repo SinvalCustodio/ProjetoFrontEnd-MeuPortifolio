@@ -52,7 +52,7 @@
       <div class="container mx-auto px-6 py-3 flex justify-between items-center">
         <a href="#" class="text-xl font-bold text-blue-600">MeuPortfólio</a>
         <div class="hidden md:flex space-x-10">
-          <a v-for="item in navItems" :href="item.link" class="nav-link text-gray-700 hover:text-blue-600">{{ item.name }}</a>
+          <a v-for="(item, idx) in navItems" :key="item.name + '-' + idx" :href="item.link" class="nav-link text-gray-700 hover:text-blue-600">{{ item.name }}</a>
         </div>
         <button @click="toggleMobileMenu" class="md:hidden text-gray-700">
           <i class="fas fa-bars text-xl"></i>
@@ -96,13 +96,14 @@
           </div>
           <div class="md:w-1/2 md:pl-12">
             <h3 class="text-xl font-semibold text-gray-800 mb-6">Minhas Skills</h3>
-            <div v-for="skill in skills" class="mb-4">
+            <div v-for="(skill, sidx) in skills" :key="skill.name + '-' + sidx" class="mb-4">
               <div class="flex justify-between mb-1">
                 <span class="text-gray-700">{{ skill.name }}</span>
                 <span class="text-gray-600">{{ skill.percentage }}%</span>
               </div>
               <div class="h-2 bg-gray-200 rounded-full">
-                <div class="h-full bg-blue-600 rounded-full skill-bar" :style="{width: skill.percentage + '%'}"></div>
+                <!-- width inicial 0; animada pelo IntersectionObserver usando data-percentage -->
+                <div class="h-full bg-blue-600 rounded-full skill-bar w-0" :data-percentage="skill.percentage" style="width:0;"></div>
               </div>
             </div>
           </div>
@@ -337,20 +338,18 @@
         };
       },
       mounted() {
-        // Anima as barras de habilidades quando a seção é visualizada
+        // Anima as barras de habilidades quando a seção é visualizada (usa data-percentage)
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const skillBars = entry.target.querySelectorAll('.skill-bar');
               skillBars.forEach(bar => {
-                // A largura já está definida via Vue, apenas ativamos a transição
-                bar.classList.add('w-full');
+                const pct = bar.dataset.percentage || '0';
+                bar.style.width = pct + '%';
               });
             }
           });
-        }, {
-          threshold: 0.5
-        });
+        }, { threshold: 0.4 });
         // Observa a seção de habilidades
         const skillsSection = document.getElementById('about');
         if (skillsSection) {
