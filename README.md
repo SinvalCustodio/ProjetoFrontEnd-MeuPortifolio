@@ -4,7 +4,7 @@ Olá — este repositório contém a versão inicial do meu portfólio front-end
 
 Resumo
 
-- Protótipo estático: `Pagina_do_portifólio/1_versão_MeuPortifolio.html`.
+- Protótipo estático: `[Pagina_do_portifólio/1_versão_MeuPortifolio.html](https://github.com/SinvalCustodio/ProjetoFrontEnd-MeuPortifolio/blob/main/1_vers%C3%A3o_MeuPortifolio.html)`.
 
 - Tecnologias: Vue 3 (CDN), Tailwind CSS (CDN), Font Awesome.
 
@@ -22,7 +22,7 @@ Stack
 
 Onde está o código
 
-- Arquivo principal: `Pagina_do_portifólio/1_versão_MeuPortifolio.html`
+- Arquivo principal: (https://github.com/SinvalCustodio/ProjetoFrontEnd-MeuPortifolio/blob/main/1_vers%C3%A3o_MeuPortifolio.html)
 
 Como executar localmente (Windows)
 
@@ -48,7 +48,7 @@ Como executar localmente (Windows)
 
 Onde editar os dados
 
-- Abra `Pagina_do_portifólio/1_versão_MeuPortifolio.html` e edite o bloco `<script>` com `createApp()`.
+- Abra (https://github.com/SinvalCustodio/ProjetoFrontEnd-MeuPortifolio/blob/main/1_vers%C3%A3o_MeuPortifolio.html) e edite o bloco `<script>` com `createApp()`.
 
   - navItems — itens do menu
 
@@ -61,10 +61,6 @@ Onde editar os dados
   - contactInfos — { icon, text, link? }
 
   - socialLinks — { icon, link }
-
-Externalizar dados (recomendado)
-
-- Coloque `projects.json` em `Pagina_do_portifólio/projects.json`. Se mover para `Pagina_do_portifólio/data/projects.json`, atualize o fetch no HTML para `./data/projects.json`.
 
 Exemplo projects.json
 
@@ -82,6 +78,6 @@ Exemplo projects.json
 
 Licença
 
-- Atualize conforme desejado.
+- Atualização em andamento, aberto para sujestões e melhorias.
 
 
